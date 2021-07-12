@@ -2,7 +2,7 @@ defmodule Tesla.Mixfile do
   use Mix.Project
 
   @source_url "https://github.com/teamon/tesla"
-  @version "1.4.2"
+  @version "1.4.3-pre"
 
   def project do
     [
@@ -19,7 +19,8 @@ defmodule Tesla.Mixfile do
         plt_add_apps: [:inets, :idna, :ssl_verify_fun],
         plt_add_deps: :project
       ],
-      docs: docs()
+      docs: docs(),
+      hex: [api_url: "https://repo.hex.dubber.net/api/repos/dubber"]
     ]
   end
 
@@ -56,8 +57,8 @@ defmodule Tesla.Mixfile do
       # http clients
       {:ibrowse, "~> 4.4.0", optional: true},
       {:hackney, "~> 1.6", optional: true},
-      {:gun, "~> 2.0-pre", optional: true, override: :true},
-      {:cowboy, "~> 2.9", override: :true},
+      {:gun, "~> 2.0-pre", optional: true},
+      {:cowboy, "~> 2.9"},
       {:finch, "~> 0.3", optional: true},
       {:castore, "~> 0.1", optional: true},
       {:mint, "~> 1.0", optional: true},
@@ -73,7 +74,7 @@ defmodule Tesla.Mixfile do
 
       # testing & docs
       {:excoveralls, "~> 0.8", only: :test},
-      {:httparrot, "~> 1.2", only: :test},
+      {:httparrot, "~> 1.2", only: :test, repo: "dubber"},
       {:ex_doc, "~> 0.21", only: :dev, runtime: false},
       {:mix_test_watch, "~> 1.0", only: :dev},
       {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
