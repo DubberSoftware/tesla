@@ -435,7 +435,7 @@ if Code.ensure_loaded?(:gun) do
     end
 
     defp open_stream(pid, method, path, headers, body, req_opts, :stream) do
-      stream = :gun.request(pid, method, path, headers, "", req_opts)
+      stream = :gun.headers(pid, method, path, headers, req_opts)
       for data <- body, do: :ok = :gun.data(pid, stream, :nofin, data)
       :gun.data(pid, stream, :fin, "")
       stream

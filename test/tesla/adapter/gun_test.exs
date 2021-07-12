@@ -9,7 +9,9 @@ defmodule Tesla.Adapter.GunTest do
   alias Tesla.Adapter.Gun
 
   setup do
-    on_exit(fn -> assert Supervisor.which_children(:gun_sup) == [] end)
+    on_exit(fn ->
+      assert Supervisor.which_children(:gun_conns_sup) == []
+    end)
   end
 
   test "fallback adapter timeout option" do
@@ -182,15 +184,17 @@ defmodule Tesla.Adapter.GunTest do
     assert response.status == 500
   end
 
-  test "error on socks proxy" do
-    request = %Env{
-      method: :get,
-      url: "#{@http}/status/500"
-    }
+  # TODO socks is now supported!
+  # https://ninenines.eu/docs/en/gun/2.0/guide/migrating_from_1.3/
+  # test "error on socks proxy" do
+  #   request = %Env{
+  #     method: :get,
+  #     url: "#{@http}/status/500"
+  #   }
 
-    assert {:error, "socks protocol is not supported"} ==
-             call(request, proxy: {:socks5, 'localhost', 1234})
-  end
+  #   assert {:error, "socks protocol is not supported"} ==
+  #            call(request, proxy: {:socks5, 'localhost', 1234})
+  # end
 
   test "receive gun_up message when receive is false" do
     request = %Env{
